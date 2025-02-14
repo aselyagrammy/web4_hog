@@ -5,17 +5,22 @@ const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const path = require('path');
 const multer = require("multer");
+const qrCode = require("qrcode")
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const uri = process.env.MONGODB_URI;
 
 if (!uri) {
     console.error("Error: MONGODB_URI is undefined. Check your .env file.");
     process.exit(1);
 }
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    tls: true
+});
 
-const client = new MongoClient(uri, { tls: true });
 
 async function connectDB() {
     try {
@@ -56,34 +61,43 @@ function validatePassword(password) {
     return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(password);
 }
 
+app.get("/", (req, res) => {
+    res.redirect("/register"); // Перенаправляем на страницу регистрации
+});
+
+
 app.get('/register', (req, res) => {
     res.render('register', { error: null });
 });
 
 app.post('/register', async (req, res) => {
-    const { username, password, house } = req.body;
+    try {
+        const { username, password, house } = req.body;
+        if (!username || !password || !house) {
+            return res.render("register", { error: "All fields are required!" });
+        }
 
-    if (!username || !password || !house) {
-        return res.render("register", { error: "All fields are required!" });
+        if (!validatePassword(password)) {
+            return res.render("register", { error: "Password must be at least 6 characters long, contain at least one letter and one number." });
+        }
+
+        const usersCollection = client.db("testDB").collection("users");
+
+        const existingUser = await usersCollection.findOne({ username });
+        if (existingUser) {
+            return res.render("register", { error: "Username is already taken. Please choose another one!" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await usersCollection.insertOne({ username, password: hashedPassword, house });
+
+        res.redirect('/login');
+    } catch (error) {
+        console.error("❌ Registration error:", error);
+        res.status(500).send("Internal Server Error");
     }
-
-    if (!validatePassword(password)) {
-        return res.render("register", { error: "Password must be at least 6 characters long, contain at least one letter and one number." });
-    }
-
-    const usersCollection = client.db("testDB").collection("users");
-
-    const existingUser = await usersCollection.findOne({ username });
-    if (existingUser) {
-        return res.render("register", { error: "Username is already taken. Please choose another one!" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await usersCollection.insertOne({ username, password: hashedPassword, house });
-
-
-    res.redirect('/login');
 });
+
 
 
 // 📌 Страница логина (GET) — автозаполнение полей
@@ -215,11 +229,14 @@ app.get('/change-password', isAuthenticated, (req, res) => {
 });
 
 
-// Старт сервера
-app.listen(PORT, async () => {
+async function startServer() {
     await connectDB();
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+}
+startServer();
+
 // 📌 Маршрут для отображения страницы редактирования профиля
 app.get('/edit-profile', isAuthenticated, async (req, res) => {
     const database = client.db("testDB");
@@ -277,6 +294,60 @@ app.post('/delete-account', isAuthenticated, async (req, res) => {
         console.error("Ошибка удаления аккаунта:", error);
         res.status(500).send("Ошибка удаления аккаунта.");
     }
+});
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
+const User = require('./views/models/User');
+
+app.get('/setup-2fa', async (req, res) => {
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.redirect('/login');
+
+    // Генерируем секретный ключ для пользователя
+    const secret = speakeasy.generateSecret({ name: `HogwartsApp (${user.username})` });
+
+    // Сохраняем ключ в MongoDB
+    user.twoFASecret = secret.base32;
+    user.is2FAEnabled = true;
+    await user.save();
+
+    // Генерируем QR-код
+    qrcode.toDataURL(secret.otpauth_url, (err, data_url) => {
+        if (err) return res.status(500).send("Error generating QR code");
+        
+        // Отправляем QR-код на страницу
+        res.render('setup-2fa', { qrCode: data_url });
+    });
+});
+app.get('/verify-otp', (req, res) => {
+    res.render('verify-otp', { error: null });
+});
+
+app.post('/verify-otp', async (req, res) => {
+    const { token } = req.body;
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.redirect('/login');
+
+    const verified = speakeasy.totp.verify({
+        secret: user.twoFASecret,
+        encoding: 'base32',
+        token
+    });
+
+    if (verified) {
+        req.session.is2FAAuthenticated = true;
+        return res.redirect('/dashboard');
+    } else {
+        return res.render('verify-otp', { error: "Invalid OTP" });
+    }
+});
+function ensure2FA(req, res, next) {
+    if (!req.session.is2FAAuthenticated) return res.redirect('/verify-otp');
+    next();
+}
+
+app.get('/dashboard', ensure2FA, (req, res) => {
+    res.render('dashboard');
 });
 
 

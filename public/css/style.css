@@ -1,0 +1,252 @@
+/* Фон для страницы регистрации */
+.register-bg {
+    font-family: Arial, sans-serif;
+    background: url('hog.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Контейнер */
+.container {
+    background: rgba(255, 255, 255, 0.85); /* Лёгкая полупрозрачность */
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 900px; /* Сделала компактнее */
+    max-width: 90%;
+    margin-top: 100px;
+}
+
+/* Заголовок "WELCOME TO HOGWARTS" */
+.welcome-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 90px;
+    color: #000000;
+    text-shadow: 2px 2px 4px rgba(76, 12, 214, 0.563);
+    margin-bottom: 20px;
+}
+
+/* Общие стили для инпутов и селекта */
+input{
+    width: 95%; /* Делаем одинаковую ширину */
+    padding: 18px; /* Увеличенная высота */
+    margin: 10px 0;
+    border-radius: 14px;
+    border: 1px solid #ccc;
+    font-size: 20px; /* Чуть крупнее */
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+select {
+    width: 100%; /* Делаем одинаковую ширину */
+    padding: 20px; /* Увеличенная высота */
+    margin: 10px 0;
+    border-radius: 14px;
+    border: 1px solid #ccc;
+    font-size: 20px; /* Чуть крупнее */
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+/* Кнопка */
+button {
+    width: 100%; /* Делаем одинаковую ширину */
+    padding: 16px; /* Увеличенная высота */
+    margin-top: 10px;
+    border-radius: 14px;
+    border: none;
+    background-color: #791dc4;
+    color: white;
+    font-size: 20px; /* Чуть крупнее */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Эффекты кнопки */
+button:hover {
+    background-color: #5a02ff;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgb(57, 129, 210);
+}
+
+/* Стили для вторичной кнопки (ссылка на логин) */
+.btn-secondary {
+    display: inline-block;
+    width: 96%; /* Одинаковая ширина */
+    padding: 16px; /* Увеличенная высота */
+    margin-top: 15px;
+    background-color: #30005eca;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a02ff;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px silver;
+}
+
+/* Фон для страницы логина */
+.login-bg {
+    font-family: Arial, sans-serif;
+    background: url('hog.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Заголовок "Login" */
+.login-title {
+    font-size: 48px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/* Новый фон для Dashboard */
+.dashboard-bg {
+    font-family: Arial, sans-serif;
+    background: url('hogwarts.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Секция профиля */
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    object-fit: cover;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Список студентов */
+.students-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.student-card {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    width: 180px;
+}
+
+.student-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* Общие стили для страницы смены пароля */
+.change-password-bg {
+    font-family: Arial, sans-serif;
+    background: url('hog.jpg') no-repeat center center fixed; /* Замените на ваш фон */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Контейнер для формы */
+.change-password-container {
+    background: rgba(255, 255, 255, 0.85); /* Лёгкая полупрозрачность */
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 500px; /* Ширина контейнера */
+    max-width: 90%; /* Максимальная ширина для мобильных устройств */
+}
+
+/* Заголовок страницы */
+h2 {
+    font-size: 36px; /* Размер заголовка */
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/* Общие стили для инпутов */
+.change-password-container input {
+    width: 95%; /* Ширина инпутов */
+    padding: 15px; /* Высота инпутов */
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 18px; /* Размер шрифта */
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Кнопка смены пароля */
+.change-password-container button {
+    width: 100%; /* Полная ширина */
+    padding: 14px; /* Высота кнопки */
+    margin-top: 10px;
+    border-radius: 14px;
+    border: none;
+    background-color: #791dc4; /* Цвет кнопки */
+    color: white;
+    font-size: 18px; /* Размер шрифта */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Эффект при наведении на кнопку */
+.change-password-container button:hover {
+    background-color: #5a02ff; /* Цвет при наведении */
+    transform: scale(1.1); /* Увеличение при наведении */
+    box-shadow: 0 0 10px rgb(57, 129, 210); /* Тень при наведении */
+}
+
+/* Кнопка возврата */
+.change-password-container .btn-secondary {
+    display: inline-block;
+    width: 96%; /* Одинаковая ширина */
+    padding: 14px; /* Высота кнопки */
+    margin-top: 15px;
+    background-color: #30005eca; /* Цвет кнопки возврата */
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 18px; /* Размер шрифта */
+    transition: all 0.3s ease;
+}
+
+/* Эффект при наведении на кнопку возврата */
+.change-password-container .btn-secondary:hover {
+    background-color: #5a02ff; /* Цвет при наведении */
+    transform: scale(1.1); /* Увеличение при наведении */
+    box-shadow: 0 0 10px silver; /* Тень при наведении */
+}

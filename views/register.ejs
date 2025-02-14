@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body class="register-bg">
+    <div class="container">
+        <h1 class="welcome-text">Welcome to Hogwarts</h1>
+
+        <!-- Отображение ошибки, если есть -->
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <select name="house" required>
+                <option value="">Select your house</option>
+                <option value="Gryffindor">🦁 Gryffindor</option>
+                <option value="Hufflepuff">🦅 Hufflepuff</option>
+                <option value="Ravenclaw">🦡 Ravenclaw</option>
+                <option value="Slytherin">🐍 Slytherin</option>
+            </select>
+            <button type="submit">Register</button>
+        </form>
+
+        <a href="/login" class="btn-secondary">Already have an account? Log in</a>
+    </div>
+</body>
+</html>

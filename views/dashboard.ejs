@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-bg">
+    <div class="container">
+        <h1>Welcome, <%= username %>!</h1>
+        <p>House: <strong><%= house %></strong></p>
+
+        <div class="profile-section">
+            <img src="<%= avatarUrl || '/images/default-avatar.png' %>" class="avatar" id="user-avatar">
+            <form action="/upload-avatar" method="POST" enctype="multipart/form-data">
+                <input type="file" name="avatar" id="avatarInput" accept="image/*" required>
+                <button type="submit">Upload Avatar</button>
+            </form>
+        </div>
+        
+
+        <!-- Кнопки действий -->
+        <a href="/change-password" class="btn-secondary">Change Password</a>
+        <a href="/edit-profile" class="btn-secondary">Edit Profile</a>
+        <a href="/logout" class="btn-secondary">Logout</a>
+
+        <!-- Список других студентов -->
+        <h2>Other Students</h2>
+        <div class="students-list">
+            <% students.forEach(student => { %>
+                <div class="student-card">
+                    <img src="<%= student.avatarUrl || '/images/default-avatar.png' %>" class="student-avatar">
+                    <p><%= student.username %> - <%= student.house %></p>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
+

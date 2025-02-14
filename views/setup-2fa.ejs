@@ -1,0 +1,9 @@
+<h2>Scan this QR code in Google Authenticator</h2>
+<img src="<%= qrCode %>" alt="QR Code">
+<p>After scanning, enter the code from Google Authenticator.</p>
+
+<form action="/verify-otp" method="POST">
+    <label for="otp">Enter OTP:</label>
+    <input type="text" name="token" required>
+    <button type="submit">Verify</button>
+</form>

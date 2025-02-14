@@ -21,6 +21,11 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
+        <form action="/verify-otp" method="POST">
+            <label for="otp">enter otp:</label>
+            <input type="text" name="token" required>
+            <button type="submit">Verify</button>
+        </form>        
         <a href="/register" class="btn-secondary">Don't have an account? Sign up</a>
     </div>
 </body>

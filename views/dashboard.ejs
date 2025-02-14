@@ -24,7 +24,10 @@
         <a href="/change-password" class="btn-secondary">Change Password</a>
         <a href="/edit-profile" class="btn-secondary">Edit Profile</a>
         <a href="/logout" class="btn-secondary">Logout</a>
-
+        <% if (!session.is2FAAuthenticated) { %>
+            <script>window.location.href = '/verify-otp';</script>
+        <% } %>
+        
         <!-- Список других студентов -->
         <h2>Other Students</h2>
         <div class="students-list">

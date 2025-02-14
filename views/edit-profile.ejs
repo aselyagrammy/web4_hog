@@ -25,7 +25,10 @@
                 <option value="Ravenclaw" <%= user.house === 'Ravenclaw' ? 'selected' : '' %>>Ravenclaw</option>
                 <option value="Slytherin" <%= user.house === 'Slytherin' ? 'selected' : '' %>>Slytherin</option>
             </select>
-
+            <form action="/setup-2fa" method="GET">
+                <button type="submit">Enable 2FA</button>
+            </form>
+            
             <button type="submit" class="btn-primary">Save Changes</button>
         </form>
 
